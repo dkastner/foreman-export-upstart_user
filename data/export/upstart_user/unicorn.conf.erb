@@ -1,0 +1,11 @@
+start on starting <%= app %>-<%= name %>
+stop on stopping <%= app %>-<%= name %>
+respawn
+
+chdir <%= engine.root %>
+env WEB_CONCURRENCY=<%= num %>
+<% engine.env.each_pair do |var,env| %>
+env <%= var.upcase %>=<%= shell_quote(env) %>
+<% end %>
+
+exec bin/unicorn -c unicorn.rb >> <%= log %>/<%=name%>-<%=num%>.log 2>&1
