@@ -33,18 +33,10 @@ class Foreman::Export::UpstartUser < Foreman::Export::Upstart
   end
 
   def location
-    options[:location] || "/home/#{user}/.init"
-  end
-
-  def app
-    options[:app] || File.basename(Dir.pwd)
-  end
-
-  def log
-    options[:log] || "log"
+    super|| "/home/#{user}/.init"
   end
 
   def user
-    options[:user] || `whoami`.strip
+    super || `whoami`.strip
   end
 end
