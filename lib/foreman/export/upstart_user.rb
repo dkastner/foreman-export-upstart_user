@@ -2,18 +2,10 @@ require "erb"
 require "foreman/export"
 
 class Foreman::Export::UpstartUser < Foreman::Export::Upstart
-  def initialize location, engine, options={}
-    super
-    # what a pain in the ass
-    # template is obviously not intended to be overriden
-    unless @options.has_key?(:template)
-      template = File.expand_path("../../../../data/export/upstart_user", __FILE__)
-      @options = { :template => template }.merge(@options).freeze
-    end
-  end
-
   def export
     super
+
+    options[:template] = File.expand_path("../../../../data/export/upstart_user", __FILE__)
 
     Dir["#{location}/#{app}*.conf"].each do |file|
       clean file
@@ -33,10 +25,10 @@ class Foreman::Export::UpstartUser < Foreman::Export::Upstart
   end
 
   def location
-    super|| "/home/#{user}/.init"
+    "/home/#{user}/.init"
   end
 
   def user
-    super || `whoami`.strip
+    options[:user] || `whoami`.strip
   end
 end
