@@ -3,6 +3,7 @@ stop on stopping <%= app %>-<%= name %>
 respawn
 
 chdir <%= engine.root %>
+env HOME=<%= ENV['HOME'] %>
 env PORT=<%= port %>
 
 script

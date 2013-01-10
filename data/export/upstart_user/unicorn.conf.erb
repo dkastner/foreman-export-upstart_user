@@ -3,6 +3,7 @@ stop on stopping <%= app %>
 respawn
 
 chdir <%= engine.root %>
+env HOME=<%= ENV['HOME'] %>
 env WEB_CONCURRENCY=<%= num %>
 
 script
