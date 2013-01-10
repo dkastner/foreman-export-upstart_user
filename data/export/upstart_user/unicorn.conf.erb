@@ -4,13 +4,5 @@ respawn
 
 chdir <%= engine.root %>
 env WEB_CONCURRENCY=<%= num %>
-env HOME=/home/inspire
-env RAILS_ENV=production
-<% engine.env.each_pair do |var,env| %>
-env <%= var.upcase %>=<%= shell_quote(env) %>
-<% end %>
 
-script
-  export PATH="$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
-  exec bin/unicorn -c unicorn.rb >> <%= log %>/<%=name%>-<%=num%>.log 2>&1
-end script
+exec sudo -i -u inspire bash -c "bin/unicorn -c unicorn.rb >> <%= log %>/<%=name%>.log 2>&1"
