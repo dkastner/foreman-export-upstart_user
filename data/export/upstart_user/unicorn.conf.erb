@@ -1,11 +1,16 @@
-start on starting <%= app %>-<%= name %>
-stop on stopping <%= app %>-<%= name %>
+start on starting <%= app %>
+stop on stopping <%= app %>
 respawn
 
 chdir <%= engine.root %>
 env WEB_CONCURRENCY=<%= num %>
+env HOME=/home/inspire
+env RAILS_ENV=production
 <% engine.env.each_pair do |var,env| %>
 env <%= var.upcase %>=<%= shell_quote(env) %>
 <% end %>
 
-exec bin/unicorn -c unicorn.rb >> <%= log %>/<%=name%>-<%=num%>.log 2>&1
+script
+  export PATH="$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
+  exec bin/unicorn -c unicorn.rb >> <%= log %>/<%=name%>-<%=num%>.log 2>&1
+end script

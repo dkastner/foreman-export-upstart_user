@@ -4,8 +4,12 @@ respawn
 
 chdir <%= engine.root %>
 env PORT=<%= port %>
+env RAILS_ENV=production
 <% engine.env.each_pair do |var,env| %>
 env <%= var.upcase %>=<%= shell_quote(env) %>
 <% end %>
 
-exec <%= process.command %> >> <%= log %>/<%=name%>-<%=num%>.log 2>&1
+script
+  export PATH="$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
+  exec <%= process.command %> >> <%= log %>/<%=name%>-<%=num%>.log 2>&1
+end script
