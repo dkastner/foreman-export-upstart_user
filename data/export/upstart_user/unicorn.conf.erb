@@ -3,6 +3,5 @@ stop on stopping <%= app %>
 respawn
 
 chdir <%= engine.root %>
-env WEB_CONCURRENCY=<%= num %>
 
-exec sudo -i -u inspire bash -c "bin/unicorn -c unicorn.rb >> <%= log %>/<%=name%>.log 2>&1"
+exec sudo -i -u inspire bash -c "WEB_CONCURRENCY=<%= num %> bin/unicorn -c unicorn.rb >> <%= log %>/<%=name%>.log 2>&1"
