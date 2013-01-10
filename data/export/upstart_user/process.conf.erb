@@ -5,4 +5,7 @@ respawn
 chdir <%= engine.root %>
 env PORT=<%= port %>
 
-exec sudo -i -u inspire bash -c "<%= process.command %> >> <%= log %>/<%=name%>-<%= app %>.log 2>&1"
+script
+  . $HOME/.bashrc
+  <%= process.command %> >> <%= log %>/<%=name%>-<%= app %>.log 2>&1
+end script
