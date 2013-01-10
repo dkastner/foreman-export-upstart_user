@@ -1,0 +1,5 @@
+start on starting <%= app %>
+stop on stopping <%= app %>
+respawn
+
+exec monit -I >> <%= log %>/monit.log 2>&1

@@ -27,6 +27,8 @@ class Foreman::Export::UpstartUser < Foreman::Export::Upstart
         end
       end
     end
+
+    write-template 'upstart_user/monit.erb', 'monit.conf', binding
   end
 
   def location

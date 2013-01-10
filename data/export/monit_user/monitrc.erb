@@ -1,3 +1,5 @@
+set daemon 5
+
 <% engine.each_process do |name, process| %>
   <% 1.upto(engine.formation[name]) do |num| %>
 check process <%= app %>-<%= name %>-<%= num %> with pidfile <%= File.join(pid_dir, "#{name}-#{num}.pid") %>
@@ -5,5 +7,6 @@ check process <%= app %>-<%= name %>-<%= num %> with pidfile <%= File.join(pid_d
   group <%= app %>-<%= name %>
   if totalmem > 200.0 MB for 5 cycles then alert
   if cpu > 90% for 5 cycles then alert
+  every 2 cycles
   <% end %>
 <% end -%>
