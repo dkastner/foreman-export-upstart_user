@@ -1,0 +1,6 @@
+<% engine.each_process do |name, process| %>
+  <% 1.upto(engine.formation[name]) do |num| %>
+check process <%= app %>-<%= name %>-<%= num %> with pidfile <%= File.join(pid_dir, "#{name}-#{num}.pid") %>
+  group <%= app %>-<%= name %>
+  <% end %>
+<% end -%>
