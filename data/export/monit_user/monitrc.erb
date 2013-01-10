@@ -2,7 +2,11 @@ set daemon 5
 
 <% engine.each_process do |name, process| %>
   <% 1.upto(engine.formation[name]) do |num| %>
+    <% if name == 'web' %>
+check process <%= app %>-<%= name %> with pidfile <%= File.join(pid_dir, "#{name}.pid") %>
+    <% else %>
 check process <%= app %>-<%= name %>-<%= num %> with pidfile <%= File.join(pid_dir, "#{name}-#{num}.pid") %>
+    <% end %>
   mode passive
   group <%= app %>-<%= name %>
   if totalmem > 200.0 MB for 5 cycles then alert
